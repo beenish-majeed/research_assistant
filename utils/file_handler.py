@@ -3,7 +3,7 @@ import json
 def saving(research):
     data = {
         "topic": research.topic,
-        "created_at": research.created_at,
+        "created_at": str(research.created_at),
         "summary": research.summary,
         "sources": research.sources
     }

@@ -5,4 +5,4 @@ class Research:
         self.topic = topic
         self.sources = []
         self.summary = ""
-        self.created_at = datetime.now()
+        self.created_at = str(datetime.now())
