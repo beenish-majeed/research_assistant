@@ -1,4 +1,5 @@
 from models.research import Research
+from services.ai_service import ai_agent
 
 print("~" * 50)
 
@@ -13,3 +14,5 @@ while question == "":
     question = input("Enter Topic: ").strip()
 
 r1 = Research(question)
+r1.summary = ai_agent(question)
+print(r1.summary)
