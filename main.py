@@ -14,7 +14,9 @@ while question == "":
     print("Please enter a valid research topic.")
     question = input("Enter Topic: ").strip()
 
-r1 = Research(question)
-r1.summary = ai_agent(question)
-s1 = saving(r1)
+r1 = Research(question) 
+result = ai_agent(question) 
+r1.summary = result["summary"] 
+r1.sources = result["sources"] 
+saving(r1) 
 print(r1.summary)

@@ -1,6 +1,7 @@
 from google import genai
 from dotenv import load_dotenv
 import os
+import json
 
 load_dotenv()
 
@@ -10,16 +11,23 @@ client = genai.Client(api_key=api_key)
 
 def ai_agent(user_input):
     prompt = f"""
-You are an expert research assistant. Provide a clear, informative answer about the user's topic.
-Organize the response with meaningful headings and subheadings, and explain each section concisely.
+    You are an expert research assistant. Research the user's topic and provide a clear, concise, and informative response.
 
-User's topic:
-{user_input}
-"""
+    Requirements:
+    - Use clear headings and subheadings.
+    - Explain important points briefly.
+    - Include relevant and credible sources.
+    - Format the response in Markdown.
+    - End with a "Sources" section containing the source URLs.
+
+    User's topic:
+    {user_input}
+    """
 
     interaction = client.interactions.create(
         model="gemini-3.8-flash",
         input=prompt
     )
 
-    return interaction.output_text
+    response_text = interaction.output_text 
+    return json.loads(response_text)
