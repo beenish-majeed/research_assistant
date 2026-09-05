@@ -10,19 +10,14 @@ client = genai.Client(api_key=api_key)
 
 
 def ai_agent(user_input):
-    prompt = f"""
-    You are an expert research assistant. Research the user's topic and provide a clear, concise, and informative response.
+    prompt = f""" You are an expert research assistant. 
+    Research the user's topic and return a JSON object with exactly two fields: 
 
-    Requirements:
-    - Use clear headings and subheadings.
-    - Explain important points briefly.
-    - Include relevant and credible sources.
-    - Format the response in Markdown.
-    - End with a "Sources" section containing the source URLs.
-
-    User's topic:
-    {user_input}
-    """
+    1. "summary": A clear and informative Markdown response using headings and subheadings.
+    2. "sources": A list of relevant and credible source URLs. 
+    
+    Do not add any text outside the JSON object. 
+    User's topic: {user_input} """
 
     interaction = client.interactions.create(
         model="gemini-3.8-flash",
@@ -30,4 +25,9 @@ def ai_agent(user_input):
     )
 
     response_text = interaction.output_text 
-    return json.loads(response_text)
+    try: 
+        result = json.loads(response_text) 
+        return result 
+    except json.JSONDecodeError: 
+        print("Error: Gemini returned an invalid JSON response.") 
+        return None
