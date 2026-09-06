@@ -22,7 +22,16 @@ def saving(research):
 
 
 def load_research(filename):
-    with open(filename, "r") as file:
-        data = json.load(file)
+    if os.path.exists(filename):
+        try:
+            with open(filename, "r") as file:
+                data = json.load(file)
+                return data
 
-    return data
+        except json.JSONDecodeError:
+            print("Invalid JSON format in the research report.")
+            return None
+
+    else:
+        print("No saved research report found.")
+        return None

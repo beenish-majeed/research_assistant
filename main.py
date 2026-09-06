@@ -34,16 +34,17 @@ while True:
     elif choice == "2":
         report = load_research("data/reports/research_1.json")
 
-        print("\nTopic:", report["topic"])
-        print("\nSummary:")
-        print(report["summary"])
+        if report is not None:
+            print("\nTopic:", report["topic"])
+            print("\nSummary:")
+            print(report["summary"])
 
-        print("\nSources:")
-        for source in report["sources"]:
-            print(source)
+            print("\nSources:")
+            for source in report["sources"]:
+                print(source)
 
     elif choice == "3":
-        print("Thanks for Visiting")
+        print("Thanks for Visiting!")
         break
 
     else:
