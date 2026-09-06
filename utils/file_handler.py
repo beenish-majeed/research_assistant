@@ -35,3 +35,14 @@ def load_research(filename):
     else:
         print("No saved research report found.")
         return None
+
+def get_saved_reports():
+    reports_path = "data/reports"
+
+    reports = []
+
+    for filename in os.listdir(reports_path):
+        if filename.startswith("research_") and filename.endswith(".json"):
+            reports.append(filename)
+
+    return reports

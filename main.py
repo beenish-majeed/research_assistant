@@ -1,6 +1,6 @@
 from models.research import Research
 from services.ai_service import ai_agent
-from utils.file_handler import saving, load_research
+from utils.file_handler import saving, load_research, get_saved_reports
 
 print("~" * 50)
 
@@ -32,16 +32,53 @@ while True:
             print(r1.summary)
 
     elif choice == "2":
-        report = load_research("data/reports/research_1.json")
+        reports = get_saved_reports()
 
-        if report is not None:
-            print("\nTopic:", report["topic"])
-            print("\nSummary:")
-            print(report["summary"])
+        if not reports:
+            print("\nNo saved research reports found.")
+        else:
+            print("\nSaved Research Reports:")
 
-            print("\nSources:")
-            for source in report["sources"]:
-                print(source)
+            for number, report in enumerate(reports, start=1):
+                print(f"{number}. {report}")
+
+            ch = input("\nEnter report number or type 'all': ").strip().lower()
+
+            if ch == "all":
+                for report_name in reports:
+                    report = load_research(f"data/reports/{report_name}")
+
+                    if report is not None:
+                        print("\n" + "=" * 50)
+                        print("Topic:", report["topic"])
+                        print("\nSummary:")
+                        print(report["summary"])
+
+                        print("\nSources:")
+                        for source in report["sources"]:
+                            print(source)
+
+            elif ch.isdigit():
+                number = int(ch)
+
+                if 1 <= number <= len(reports):
+                    report = load_research(
+                        f"data/reports/{reports[number - 1]}"
+                    )
+
+                    if report is not None:
+                        print("\nTopic:", report["topic"])
+                        print("\nSummary:")
+                        print(report["summary"])
+
+                        print("\nSources:")
+                        for source in report["sources"]:
+                            print(source)
+                else:
+                    print("\nInvalid report number.")
+
+            else:
+                print("\nInvalid choice.")
 
     elif choice == "3":
         print("Thanks for Visiting!")

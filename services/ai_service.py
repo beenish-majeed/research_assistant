@@ -14,7 +14,7 @@ def ai_agent(user_input):
     Research the user's topic and return a JSON object with exactly two fields: 
 
     1. "summary": A clear and informative Markdown response using headings and subheadings.
-    2. "sources": A list of relevant and credible source URLs. 
+    2. "sources":  **Must be list of relevant and credible source URLs**. 
     
     Do not add any text outside the JSON object. 
     User's topic: {user_input} """
